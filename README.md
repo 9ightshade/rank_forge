@@ -34,3 +34,60 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+RankForge/
+├── app/
+│   ├── layout.js
+│   ├── page.js (Homepage)
+│   ├── leaderboard/
+│   │   └── page.js
+│   ├── contributor/
+│   │   └── [id]/
+│   │       └── page.js (Public Profile View)
+│   ├── dashboard/
+│   │   ├── layout.js (Authenticated Layout)
+│   │   ├── page.js (Contributor Dashboard)
+│   │   ├── profile/
+│   │   │   └── page.js
+│   │   ├── submissions/
+│   │   │   └── page.js
+│   │   └── new-submission/
+│   │       └── page.js
+│   ├── admin/
+│   │   ├── layout.js
+│   │   ├── page.js (Admin Dashboard)
+│   │   └── review/
+│   │       └── [id]/
+│   │           └── page.js (Scoring Panel)
+│   ├── auth/
+│   │   ├── signin/
+│   │   │   └── page.js
+│   │   └── signup/
+│   │       └── page.js
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   └── Sidebar.jsx
+│   ├── ui/
+│   │   ├── Button.jsx
+│   │   ├── Card.jsx
+│   │   ├── Badge.jsx
+│   │   └── Modal.jsx
+│   ├── auth/
+│   │   ├── SignInForm.jsx
+│   │   └── SignUpForm.jsx
+│   ├── contributor/
+│   │   ├── ProfileBadge.jsx
+│   │   ├── ScoreCard.jsx
+│   │   ├── ContributionForm.jsx
+│   │   └── SubmissionList.jsx
+│   └── admin/
+│       ├── SubmissionsTable.jsx
+│       └── ScoringPanel.jsx
+├── lib/
+│   ├── auth.js
+│   └── database.js
+└── public/
+    ├── images/
+    └── icons/
