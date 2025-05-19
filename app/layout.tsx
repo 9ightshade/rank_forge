@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +31,11 @@ export default function RootLayout({
       >
            <CivicAuthProvider>
         <div className="min-h-screen flex flex-col">
-          <Navbar/>
+    
           <main className="flex-grow">
             {children}
           </main>
-          <Footer/>
+        
         </div>
         </CivicAuthProvider>
       </body>

@@ -1,82 +1,351 @@
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+"use client"
 
-export default function Sidebar({ isAdmin = false }) {
-  const pathname = usePathname();
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { 
+  LayoutDashboard, 
+  User, 
+  FileText, 
+  PlusCircle, 
+  Award, 
+  Settings, 
+  Users, 
+  ClipboardCheck, 
+  ChevronLeft,
+  LogOut,
+  Shield,
+  Bell
+} from "lucide-react"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
+interface UserProfile {
+  name?: string;
+  email?: string;
+  image?: string;
+  role?: string;
+  notifications?: number;
+}
+
+export default function AppSidebar({ 
+  isAdmin = false, 
+  userProfile = { 
+    name: "Username", 
+    role: isAdmin ? "Admin" : "Contributor" 
+  } 
+}: { 
+  isAdmin?: boolean;
+  userProfile?: UserProfile;
+}) {
+  const pathname = usePathname()
+  const [collapsed, setCollapsed] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
+  
+  // Check if viewport is mobile on mount and when resized
+  useEffect(() => {
+    const checkMobile = () => {
+      setCollapsed(window.innerWidth < 768)
+    }
+    
+    // Initial check
+    checkMobile()
+    
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Update active submenu based on current pathname
+  useEffect(() => {
+    if (pathname.startsWith('/dashboard')) {
+      setActiveSubmenu('dashboard')
+    } else if (pathname.startsWith('/admin')) {
+      setActiveSubmenu('admin')
+    } else {
+      setActiveSubmenu(null)
+    }
+  }, [pathname])
+  
   const contributorLinks = [
     {
-      name: "Dashboard",
+      title: "Dashboard",
       href: "/dashboard",
-      icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
+      icon: LayoutDashboard,
+      section: "dashboard",
     },
     {
-      name: "Profile",
+      title: "Profile",
       href: "/dashboard/profile",
-      icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
+      icon: User,
+      section: "dashboard",
     },
     {
-      name: "Submissions",
+      title: "Submissions",
       href: "/dashboard/submissions",
-      icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2",
+      icon: FileText,
+      section: "dashboard",
+      badge: 3, // Example badge count
     },
     {
-      name: "New Submission",
+      title: "New Submission",
       href: "/dashboard/new-submission",
-      icon: "M12 6v6m0 0v6m0-6h6m-6 0H6",
+      icon: PlusCircle,
+      section: "dashboard",
+      highlight: true,
     },
-  ];
-
+    {
+      title: "Leaderboard",
+      href: "/leaderboard",
+      icon: Award,
+      section: "rankings",
+    },
+    {
+      title: "Settings",
+      href: "/dashboard/settings",
+      icon: Settings,
+      section: "dashboard",
+    },
+  ]
+  
   const adminLinks = [
     {
-      name: "Admin Dashboard",
+      title: "Admin Dashboard",
       href: "/admin",
-      icon: "M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2",
+      icon: LayoutDashboard,
+      section: "admin",
     },
-  ];
-
-  const links = isAdmin ? adminLinks : contributorLinks;
+    {
+      title: "Review Submissions",
+      href: "/admin/review",
+      icon: ClipboardCheck,
+      section: "admin",
+      badge: 12, // Example pending reviews
+      highlight: true,
+    },
+    {
+      title: "Contributors",
+      href: "/admin/contributors",
+      icon: Users,
+      section: "admin",
+    },
+    {
+      title: "Settings",
+      href: "/admin/settings",
+      icon: Settings,
+      section: "admin",
+    },
+  ]
+  
+  // Group links by section
+  const links = isAdmin ? adminLinks : contributorLinks
+  const sections = links.reduce((acc, link) => {
+    if (!acc[link.section]) {
+      acc[link.section] = []
+    }
+    acc[link.section].push(link)
+    return acc
+  }, {} as Record<string, typeof links>)
 
   return (
-    <div className="h-full min-h-screen bg-gray-100 dark:bg-gray-800 w-64 fixed left-0 top-16 bottom-0 overflow-y-auto border-r border-gray-200 dark:border-gray-700">
-      <nav className="mt-5 px-2">
-        <div className="space-y-1">
-          {links.map((link) => {
-            const isActive = pathname === link.href;
-
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`${
-                  isActive
-                    ? "bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
-                <svg
-                  className={`${
-                    isActive
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                  } mr-3 flex-shrink-0 h-5 w-5`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d={link.icon}
-                  />
-                </svg>
-                {link.name}
-              </Link>
-            );
-          })}
+    <Sidebar 
+      className={cn(
+        "group relative z-30 flex h-screen max-h-screen w-[250px] flex-col border-r bg-background transition-all duration-300",
+        collapsed && "w-[70px]"
+      )}
+    >
+      <SidebarHeader className="border-b px-4 py-3">
+        <div className={cn(
+          "flex items-center gap-2 transition-opacity", 
+          collapsed ? "justify-center" : "justify-between"
+        )}>
+          <Link href="/" className="flex items-center gap-2">
+            <Award className="h-6 w-6 text-primary" />
+            <span className={cn(
+              "text-lg font-bold transition-opacity duration-200", 
+              collapsed && "opacity-0 w-0 hidden"
+            )}>
+              RankForge
+            </span>
+          </Link>
+          
+          {!collapsed && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-8 w-8 p-0"
+                    onClick={() => setCollapsed(!collapsed)}
+                  >
+                    <Bell className="h-4 w-4" />
+                    {userProfile?.notifications && userProfile.notifications > 0 && (
+                      <span className="absolute right-1 top-1 flex h-2 w-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive"></span>
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  <p>Notifications</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
-      </nav>
-    </div>
-  );
+      </SidebarHeader>
+      
+      <SidebarContent className="flex-1 overflow-auto px-3 py-2 scrollbar-thin">
+        {Object.entries(sections).map(([sectionKey, sectionLinks]) => (
+          <div key={sectionKey} className="mb-6">
+            {!collapsed && (
+              <h3 className="mb-1 px-2 text-xs font-medium uppercase text-muted-foreground">
+                {sectionKey === "dashboard" ? "Dashboard" : 
+                 sectionKey === "admin" ? "Administration" : 
+                 sectionKey === "rankings" ? "Rankings" : sectionKey}
+              </h3>
+            )}
+            <SidebarMenu>
+              {sectionLinks.map((link) => (
+                <SidebarMenuItem key={link.href}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <SidebarMenuButton 
+                          asChild 
+                          isActive={pathname === link.href}
+                          className={cn(
+                            "group relative flex w-full items-center gap-3 rounded-md px-3 py-2 transition-all",
+                            pathname === link.href ? "bg-primary/10 text-primary" : "hover:bg-accent hover:text-foreground",
+                            link.highlight && "bg-secondary/20 font-medium hover:bg-secondary/30"
+                          )}
+                        >
+                          <Link href={link.href} className={cn(
+                            "flex w-full items-center", 
+                            collapsed ? "justify-center" : "justify-start gap-3"
+                          )}>
+                            <div className="relative flex items-center justify-center">
+                              <link.icon className={cn(
+                                "h-5 w-5",
+                                pathname === link.href && "text-primary"
+                              )} />
+                              {link.badge && (
+                                <Badge 
+                                  variant="destructive" 
+                                  className={cn(
+                                    "absolute -right-2 -top-2 h-5 w-5 items-center justify-center p-0 text-[10px]", 
+                                    collapsed && "-right-1"
+                                  )}
+                                >
+                                  {link.badge}
+                                </Badge>
+                              )}
+                            </div>
+                            <span className={cn(
+                              "text-sm transition-opacity duration-200", 
+                              collapsed && "opacity-0 w-0 hidden"
+                            )}>
+                              {link.title}
+                            </span>
+                            
+                            {pathname === link.href && !collapsed && (
+                              <div className="absolute right-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary" />
+                            )}
+                          </Link>
+                        </SidebarMenuButton>
+                      </TooltipTrigger>
+                      <TooltipContent 
+                        side="right" 
+                        className={cn("z-50", !collapsed && "hidden")}
+                      >
+                        <div className="flex flex-col">
+                          <p>{link.title}</p>
+                          {link.badge && (
+                            <p className="text-xs text-muted-foreground">
+                              {link.badge} {link.badge === 1 ? "item" : "items"}
+                            </p>
+                          )}
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </div>
+        ))}
+      </SidebarContent>
+      
+      <SidebarFooter className="border-t p-3">
+        <div className={cn(
+          "flex items-center gap-3 rounded-md p-2 transition-all duration-200 hover:bg-accent",
+          collapsed && "justify-center p-1"
+        )}>
+          <Avatar className="h-9 w-9 border border-border">
+            <AvatarImage src={userProfile?.image} />
+            <AvatarFallback className="bg-primary/10 text-primary">
+              {userProfile?.name?.charAt(0) || "U"}
+            </AvatarFallback>
+          </Avatar>
+          
+          <div className={cn(
+            "flex flex-1 flex-col transition-opacity duration-200", 
+            collapsed && "opacity-0 w-0 hidden"
+          )}>
+            <span className="truncate text-sm font-medium">{userProfile?.name}</span>
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              {isAdmin ? (
+                <>
+                  <Shield className="h-3 w-3" /> Admin
+                </>
+              ) : (
+                userProfile?.role || "Contributor"
+              )}
+            </span>
+          </div>
+          
+          {!collapsed && (
+            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full p-0">
+              <LogOut className="h-4 w-4" />
+              <span className="sr-only">Log out</span>
+            </Button>
+          )}
+        </div>
+      </SidebarFooter>
+      
+      <Button 
+        variant="secondary" 
+        size="sm" 
+        className="absolute -right-3 top-20 h-6 w-6 rounded-full p-0 shadow-md"
+        onClick={() => setCollapsed(!collapsed)}
+      >
+        <ChevronLeft className={cn(
+          "h-4 w-4 transition-transform", 
+          collapsed && "rotate-180"
+        )} />
+        <span className="sr-only">
+          {collapsed ? "Expand" : "Collapse"} sidebar
+        </span>
+      </Button>
+    </Sidebar>
+  )
 }
