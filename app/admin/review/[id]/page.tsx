@@ -1,7 +1,8 @@
-import Button from "@/components/ui/button"
+import ScoringPanel from "@/components/admin/scoringPanel"
+import {Button} from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
-import ScoringPanel from "@/components/admin/ScoringPanel"
+
 
 export default function ReviewSubmissionPage() {
   return (
@@ -19,7 +20,7 @@ export default function ReviewSubmissionPage() {
         </div>
       </div>
 
-      <ScoringPanel />
+      <ScoringPanel submission={{ /* Add appropriate Submission object properties here */ }} />
     </div>
   )
 }

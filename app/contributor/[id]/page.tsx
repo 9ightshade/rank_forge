@@ -1,12 +1,13 @@
-import Navbar from "@/components/layout/Navbar"
-import Footer from "@/components/layout/Footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Github, Twitter, Globe, MapPin, Calendar, Award, Check, Clock, X } from "lucide-react"
-import ProfileBadge from "@/components/contributor/ProfileBadge"
-import ScoreCard from "@/components/contributor/ScoreCard"
+import Navbar from "@/components/layout/navbar"
+import ProfileBadge from "@/components/contributor/profileBadge"
+import ScoreCard from "@/components/contributor/scoreCard"
+import Footer from "@/components/layout/footer"
+
 
 // Sample contributor data
 const contributor = {
@@ -66,8 +67,12 @@ const contributor = {
   ],
 }
 
-export default function ContributorProfilePage({ params }) {
-  const getStatusBadge = (status) => {
+export default function ContributorProfilePage() {
+  interface StatusBadgeProps {
+    status: "approved" | "pending" | "rejected";
+  }
+
+  const getStatusBadge = (status: StatusBadgeProps["status"]): JSX.Element | null => {
     switch (status) {
       case "approved":
         return (
@@ -92,15 +97,16 @@ export default function ContributorProfilePage({ params }) {
     }
   }
 
-  const getTypeBadge = (type) => {
-    const types = {
-      feature: "bg-purple-50 text-purple-700",
-      bugfix: "bg-red-50 text-red-700",
-      documentation: "bg-blue-50 text-blue-700",
-      test: "bg-green-50 text-green-700",
-      design: "bg-pink-50 text-pink-700",
-      other: "bg-gray-50 text-gray-700",
-    }
+  const types = {
+    feature: "bg-purple-50 text-purple-700",
+    bugfix: "bg-red-50 text-red-700",
+    documentation: "bg-blue-50 text-blue-700",
+    test: "bg-green-50 text-green-700",
+    design: "bg-pink-50 text-pink-700",
+    other: "bg-gray-50 text-gray-700",
+  }
+
+  const getTypeBadge = (type: keyof typeof types) => {
 
     return (
       <Badge variant="outline" className={types[type] || types.other}>
@@ -111,7 +117,7 @@ export default function ContributorProfilePage({ params }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+      <Navbar/>
       <main className="flex-1">
         <div className="container py-8 md:py-12">
           <div className="grid gap-8 md:grid-cols-3">
@@ -127,7 +133,7 @@ export default function ContributorProfilePage({ params }) {
                     <h1 className="mt-4 text-2xl font-bold">{contributor.name}</h1>
                     <p className="text-muted-foreground">@{contributor.username}</p>
                     <div className="mt-2">
-                      <ProfileBadge type={contributor.rank.toLowerCase()} label={contributor.rank} />
+                      <ProfileBadge type={contributor.rank.toLowerCase() as "bronze" | "silver" | "gold" | "platinum"} label={contributor.rank} />
                     </div>
                     <p className="mt-4 text-sm">{contributor.bio}</p>
 
@@ -363,7 +369,7 @@ export default function ContributorProfilePage({ params }) {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer/>
     </div>
   )
 }

@@ -1,6 +1,7 @@
+import SubmissionsTable from "@/components/admin/submissionTable"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ClipboardCheck, Users, FileText, AlertTriangle } from "lucide-react"
-import SubmissionsTable from "@/components/admin/SubmissionsTable"
+
 
 export default function AdminDashboardPage() {
   return (
@@ -67,7 +68,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Submissions Table */}
-      <SubmissionsTable />
+      <SubmissionsTable/>
 
       {/* Activity Chart */}
       <Card>

@@ -1,4 +1,4 @@
-import ContributionForm from "@/components/contributor/ContributionForm"
+import ContributionForm from "@/components/contributor/contributorForm";
 
 export default function NewSubmissionPage() {
   return (

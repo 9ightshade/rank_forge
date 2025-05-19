@@ -1,6 +1,6 @@
-import SignInForm from "@/components/auth/SignInForm"
 import Link from "next/link"
 import { Award } from "lucide-react"
+import SignInForm from "@/components/auth/signInForm"
 
 export default function SignInPage() {
   return (
@@ -10,7 +10,7 @@ export default function SignInPage() {
           <Award className="h-8 w-8 text-primary" />
           <span className="text-2xl font-bold">RankForge</span>
         </Link>
-        <SignInForm />
+        <SignInForm/>
       </div>
     </div>
   )

@@ -25,7 +25,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -58,8 +57,6 @@ export default function AppSidebar({
 }) {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
-  
   // Check if viewport is mobile on mount and when resized
   useEffect(() => {
     const checkMobile = () => {
@@ -72,17 +69,6 @@ export default function AppSidebar({
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  // Update active submenu based on current pathname
-  useEffect(() => {
-    if (pathname.startsWith('/dashboard')) {
-      setActiveSubmenu('dashboard')
-    } else if (pathname.startsWith('/admin')) {
-      setActiveSubmenu('admin')
-    } else {
-      setActiveSubmenu(null)
-    }
-  }, [pathname])
   
   const contributorLinks = [
     {

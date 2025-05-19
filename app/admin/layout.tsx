@@ -1,7 +1,10 @@
+import AppSidebar from "@/components/layout/sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/layout/Sidebar"
 
-export default function AdminLayout({ children }) {
+
+import { PropsWithChildren } from "react";
+
+export default function AdminLayout({ children }: PropsWithChildren<object>) {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen">

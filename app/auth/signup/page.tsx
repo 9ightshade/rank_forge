@@ -1,6 +1,6 @@
-import SignUpForm from "@/components/auth/SignUpForm"
-import Link from "next/link"
-import { Award } from "lucide-react"
+import Link from "next/link";
+import { Award } from "lucide-react";
+import SignUpForm from "@/components/auth/signUpForm";
 
 export default function SignUpPage() {
   return (
@@ -13,5 +13,5 @@ export default function SignUpPage() {
         <SignUpForm />
       </div>
     </div>
-  )
+  );
 }

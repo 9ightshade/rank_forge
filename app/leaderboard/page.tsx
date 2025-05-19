@@ -1,11 +1,12 @@
-import Navbar from "@/components/layout/Navbar"
-import Footer from "@/components/layout/Footer"
+
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Award, Search, Trophy, Medal } from "lucide-react"
 import Link from "next/link"
-import ProfileBadge from "@/components/contributor/ProfileBadge"
+import Navbar from "@/components/layout/navbar"
+import ProfileBadge from "@/components/contributor/profileBadge"
+import Footer from "@/components/layout/footer"
 
 // Sample data for the leaderboard
 const contributors = [
@@ -207,7 +208,7 @@ export default function LeaderboardPage() {
                               </Link>
                             </div>
                             <div className="col-span-2 text-center">
-                              <ProfileBadge type={contributor.rank.toLowerCase()} label={contributor.rank} size="sm" />
+                              <ProfileBadge type={contributor.rank.toLowerCase() as "bronze" | "silver" | "gold" | "platinum"} label={contributor.rank} size="sm" />
                             </div>
                             <div className="col-span-2 text-center font-medium">{contributor.score}</div>
                             <div className="col-span-2 text-center text-muted-foreground">
