@@ -13,8 +13,6 @@ import {
   Briefcase,
   ChevronRight,
 } from "lucide-react";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
 import Image from "next/image";
 import pfp from "@/public/images/avatar.png";
 // Stats data
@@ -112,7 +110,7 @@ export default function HomePage() {
   }, []);
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
+  
       <main className="flex-1">
         {/* Hero Section */}
         <section
@@ -558,7 +556,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-      <Footer />
+    
     </div>
   );
 }

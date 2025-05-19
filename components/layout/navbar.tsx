@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { Menu, X, Award, User, LogOut, BarChart, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Menu, X, Award, User, LogOut, BarChart, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface User {
   name?: string;
@@ -21,65 +21,77 @@ interface User {
 }
 
 export default function Navbar({ user }: { user?: User }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
   // Handle scroll effect for navbar
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-  
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Close mobile menu when resizing to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768 && isMenuOpen) {
-        setIsMenuOpen(false)
+        setIsMenuOpen(false);
       }
-    }
-    
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [isMenuOpen])
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMenuOpen]);
 
   // Navigation links data for DRY code
   const navLinks = [
-    { href: "/leaderboard", label: "Leaderboard", icon: <BarChart className="mr-2 h-4 w-4 md:hidden" /> },
-    { href: "/contributors", label: "Contributors", icon: <Users className="mr-2 h-4 w-4 md:hidden" /> },
-  ]
+    {
+      href: "/leaderboard",
+      label: "Leaderboard",
+      icon: <BarChart className="mr-2 h-4 w-4 md:hidden" />,
+    },
+    {
+      href: "/contributor",
+      label: "Contributors",
+      icon: <Users className="mr-2 h-4 w-4 md:hidden" />,
+    },
+  ];
 
   // Handle escape key to close mobile menu
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent): void => {
       if (event.key === "Escape" && isMenuOpen) {
-      setIsMenuOpen(false)
+        setIsMenuOpen(false);
       }
-    }
+    };
 
     if (isMenuOpen) {
-      document.addEventListener("keydown", handleEscKey)
+      document.addEventListener("keydown", handleEscKey);
     }
 
     return () => {
-      document.removeEventListener("keydown", handleEscKey)
-    }
-  }, [isMenuOpen])
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <nav 
+    <nav
       className={cn(
         "sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-shadow duration-200",
         scrolled && "shadow-sm"
       )}
-      aria-label="Main navigation"
-    >
+      aria-label="Main navigation">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center gap-2 transition-colors hover:text-primary">
+          <Link
+            href="/"
+            className="flex items-center gap-2 transition-colors hover:text-primary"
+            onClick={() => {
+              console.log("Logo clicked");
+            }}>
             <Award className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">RankForge</span>
           </Link>
@@ -88,11 +100,10 @@ export default function Navbar({ user }: { user?: User }) {
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-6">
           {navLinks.map((link) => (
-            <Link 
+            <Link
               key={link.href}
-              href={link.href} 
-              className="relative text-sm font-medium transition-colors hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-            >
+              href={link.href}
+              className="relative text-sm font-medium transition-colors hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full">
               {link.label}
             </Link>
           ))}
@@ -100,11 +111,15 @@ export default function Navbar({ user }: { user?: User }) {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full p-0" aria-label="User menu">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative h-8 w-8 rounded-full p-0"
+                  aria-label="User menu">
                   {user.image ? (
-                    <Image 
-                      src={user.image} 
-                      alt={user.name || "User profile"} 
+                    <Image
+                      src={user.image}
+                      alt={user.name || "User profile"}
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
@@ -121,7 +136,11 @@ export default function Navbar({ user }: { user?: User }) {
               <DropdownMenuContent align="end" className="w-56">
                 <div className="flex flex-col space-y-1 p-2">
                   <p className="text-sm font-medium">{user.name || "User"}</p>
-                  {user.email && <p className="text-xs text-muted-foreground">{user.email}</p>}
+                  {user.email && (
+                    <p className="text-xs text-muted-foreground">
+                      {user.email}
+                    </p>
+                  )}
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -156,25 +175,29 @@ export default function Navbar({ user }: { user?: User }) {
         </div>
 
         {/* Mobile Menu Button */}
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="md:hidden" 
+        <Button
+          variant="ghost"
+          size="sm"
+          className="md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-expanded={isMenuOpen}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          aria-label="Toggle menu">
+          {isMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
         </Button>
       </div>
 
       {/* Mobile Navigation */}
-      <div 
+      <div
         className={cn(
           "absolute left-0 right-0 top-16 transform bg-background shadow-md transition-all duration-200 ease-in-out md:hidden",
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"
-        )}
-      >
+          isMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-4 opacity-0 pointer-events-none"
+        )}>
         <div className="container py-4">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => (
@@ -182,22 +205,21 @@ export default function Navbar({ user }: { user?: User }) {
                 key={link.href}
                 href={link.href}
                 className="flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                onClick={() => setIsMenuOpen(false)}>
                 {link.icon}
                 {link.label}
               </Link>
             ))}
-            
+
             <div className="my-2 h-px bg-border" />
-            
+
             {user ? (
               <>
                 <div className="flex items-center px-3 py-2">
                   {user.image ? (
                     <Image
-                      src={user.image} 
-                      alt={user.name || "User profile"} 
+                      src={user.image}
+                      alt={user.name || "User profile"}
                       className="mr-3 h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
@@ -207,42 +229,50 @@ export default function Navbar({ user }: { user?: User }) {
                   )}
                   <div>
                     <p className="text-sm font-medium">{user.name || "User"}</p>
-                    {user.email && <p className="text-xs text-muted-foreground">{user.email}</p>}
+                    {user.email && (
+                      <p className="text-xs text-muted-foreground">
+                        {user.email}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <Link
                   href="/dashboard"
                   className="flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                  onClick={() => setIsMenuOpen(false)}>
                   <BarChart className="mr-2 h-4 w-4" />
                   Dashboard
                 </Link>
                 <Link
                   href="/dashboard/profile"
                   className="flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                  onClick={() => setIsMenuOpen(false)}>
                   <User className="mr-2 h-4 w-4" />
                   Profile
                 </Link>
                 <button
                   className="flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text-destructive transition-colors hover:bg-accent"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+                  onClick={() => setIsMenuOpen(false)}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </button>
               </>
             ) : (
               <div className="flex flex-col space-y-2 px-3 pt-2">
-                <Button variant="outline" asChild className="justify-center w-full">
-                  <Link href="/auth/signin" onClick={() => setIsMenuOpen(false)}>
+                <Button
+                  variant="outline"
+                  asChild
+                  className="justify-center w-full">
+                  <Link
+                    href="/auth/signin"
+                    onClick={() => setIsMenuOpen(false)}>
                     Sign in
                   </Link>
                 </Button>
                 <Button asChild className="justify-center w-full">
-                  <Link href="/auth/signup" onClick={() => setIsMenuOpen(false)}>
+                  <Link
+                    href="/auth/signup"
+                    onClick={() => setIsMenuOpen(false)}>
                     Sign up
                   </Link>
                 </Button>
@@ -252,5 +282,5 @@ export default function Navbar({ user }: { user?: User }) {
         </div>
       </div>
     </nav>
-  )
+  );
 }

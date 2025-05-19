@@ -4,9 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Award, Search, Trophy, Medal } from "lucide-react"
 import Link from "next/link"
-import Navbar from "@/components/layout/navbar"
 import ProfileBadge from "@/components/contributor/profileBadge"
-import Footer from "@/components/layout/footer"
 
 // Sample data for the leaderboard
 const contributors = [
@@ -105,7 +103,6 @@ const contributors = [
 export default function LeaderboardPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar />
       <main className="flex-1">
         <div className="container py-8 md:py-12">
           <div className="mx-auto max-w-4xl">
@@ -239,7 +236,6 @@ export default function LeaderboardPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   )
 }

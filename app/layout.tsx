@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { CivicAuthProvider } from "@civic/auth-web3/nextjs";
-
+import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'RankForge | Contributor Platform',
-  description: 'Centralized platform for idan-devs repo contributors',
+  title: "RankForge | Contributor Platform",
+  description: "Centralized platform for idan-devs repo contributors",
 };
 
 export default function RootLayout({
@@ -27,17 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-           <CivicAuthProvider>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="min-h-screen flex flex-col">
-    
-          <main className="flex-grow">
-            {children}
-          </main>
-        
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
         </div>
-        </CivicAuthProvider>
       </body>
     </html>
   );
