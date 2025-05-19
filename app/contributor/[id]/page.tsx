@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Github, Twitter, Globe, MapPin, Calendar, Award, Check, Clock, X } from "lucide-react"
+import { Github, Twitter, Globe, MapPin, Calendar, Award,  } from "lucide-react"
 import Navbar from "@/components/layout/navbar"
 import ProfileBadge from "@/components/contributor/profileBadge"
 import ScoreCard from "@/components/contributor/scoreCard"
 import Footer from "@/components/layout/footer"
-
+// Check, Clock, X
 
 // Sample contributor data
 const contributor = {
@@ -68,52 +68,52 @@ const contributor = {
 }
 
 export default function ContributorProfilePage() {
-  interface StatusBadgeProps {
-    status: "approved" | "pending" | "rejected";
-  }
+  // interface StatusBadgeProps {
+  //   status: "approved" | "pending" | "rejected";
+  // }
 
-  const getStatusBadge = (status: StatusBadgeProps["status"]): JSX.Element | null => {
-    switch (status) {
-      case "approved":
-        return (
-          <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-50">
-            <Check className="mr-1 h-3 w-3" /> Approved
-          </Badge>
-        )
-      case "pending":
-        return (
-          <Badge variant="outline" className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50">
-            <Clock className="mr-1 h-3 w-3" /> Pending
-          </Badge>
-        )
-      case "rejected":
-        return (
-          <Badge variant="outline" className="bg-red-50 text-red-700 hover:bg-red-50">
-            <X className="mr-1 h-3 w-3" /> Rejected
-          </Badge>
-        )
-      default:
-        return null
-    }
-  }
+  // const getStatusBadge = (status: StatusBadgeProps["status"]): JSX.Element | null => {
+  //   switch (status) {
+  //     case "approved":
+  //       return (
+  //         <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-50">
+  //           <Check className="mr-1 h-3 w-3" /> Approved
+  //         </Badge>
+  //       )
+  //     case "pending":
+  //       return (
+  //         <Badge variant="outline" className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50">
+  //           <Clock className="mr-1 h-3 w-3" /> Pending
+  //         </Badge>
+  //       )
+  //     case "rejected":
+  //       return (
+  //         <Badge variant="outline" className="bg-red-50 text-red-700 hover:bg-red-50">
+  //           <X className="mr-1 h-3 w-3" /> Rejected
+  //         </Badge>
+  //       )
+  //     default:
+  //       return null
+  //   }
+  // }
 
-  const types = {
-    feature: "bg-purple-50 text-purple-700",
-    bugfix: "bg-red-50 text-red-700",
-    documentation: "bg-blue-50 text-blue-700",
-    test: "bg-green-50 text-green-700",
-    design: "bg-pink-50 text-pink-700",
-    other: "bg-gray-50 text-gray-700",
-  }
+  // const types = {
+  //   feature: "bg-purple-50 text-purple-700",
+  //   bugfix: "bg-red-50 text-red-700",
+  //   documentation: "bg-blue-50 text-blue-700",
+  //   test: "bg-green-50 text-green-700",
+  //   design: "bg-pink-50 text-pink-700",
+  //   other: "bg-gray-50 text-gray-700",
+  // }
 
-  const getTypeBadge = (type: keyof typeof types) => {
+  // const getTypeBadge = (type: keyof typeof types) => {
 
-    return (
-      <Badge variant="outline" className={types[type] || types.other}>
-        {type.charAt(0).toUpperCase() + type.slice(1)}
-      </Badge>
-    )
-  }
+  //   return (
+  //     <Badge variant="outline" className={types[type] || types.other}>
+  //       {type.charAt(0).toUpperCase() + type.slice(1)}
+  //     </Badge>
+  //   )
+  // }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -270,8 +270,8 @@ export default function ContributorProfilePage() {
                           <div className="space-y-1">
                             <h3 className="font-medium">{submission.title}</h3>
                             <div className="flex flex-wrap gap-2">
-                              {getTypeBadge(submission.type)}
-                              {getStatusBadge(submission.status)}
+                              {/* {getTypeBadge(submission.type)}
+                              {getStatusBadge(submission.status)} */}
                               <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                             </div>
                           </div>
@@ -296,8 +296,8 @@ export default function ContributorProfilePage() {
                             <div className="space-y-1">
                               <h3 className="font-medium">{submission.title}</h3>
                               <div className="flex flex-wrap gap-2">
-                                {getTypeBadge(submission.type)}
-                                {getStatusBadge(submission.status)}
+                                {/* {getTypeBadge(submission.type)}
+                                {getStatusBadge(submission.status)} */}
                                 <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                               </div>
                             </div>
@@ -322,8 +322,8 @@ export default function ContributorProfilePage() {
                             <div className="space-y-1">
                               <h3 className="font-medium">{submission.title}</h3>
                               <div className="flex flex-wrap gap-2">
-                                {getTypeBadge(submission.type)}
-                                {getStatusBadge(submission.status)}
+                                {/* {getTypeBadge(submission.type)}
+                                {getStatusBadge(submission.status)} */}
                                 <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                               </div>
                             </div>
