@@ -146,7 +146,7 @@ export default function AppSidebar({
     if (!acc[link.section]) {
       acc[link.section] = []
     }
-    acc[link.section].push(link)
+    acc[link.section].push()
     return acc
   }, {} as Record<string, typeof links>)
 

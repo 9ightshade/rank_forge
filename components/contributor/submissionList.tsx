@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,7 +59,7 @@ const sampleSubmissions: Array<{
 export default function SubmissionList() {
   const [submissions] = useState(sampleSubmissions);
   const [activeTab, setActiveTab] = useState("all");
-
+  
   const filteredSubmissions =
     activeTab === "all"
       ? submissions
@@ -71,7 +71,7 @@ export default function SubmissionList() {
 
   const getStatusBadge = (
     status: StatusBadgeProps["status"]
-  ): JSX.Element | null => {
+  ): React.ReactElement | null => {
     switch (status) {
       case "approved":
         return (
@@ -106,7 +106,7 @@ export default function SubmissionList() {
     type: "feature" | "bugfix" | "documentation" | "test" | "design" | "other";
   }
 
-  const getTypeBadge = (type: TypeBadgeProps["type"]): JSX.Element => {
+  const getTypeBadge = (type: TypeBadgeProps["type"]): React.ReactElement => {
     const types: Record<TypeBadgeProps["type"], string> = {
       feature: "bg-purple-50 text-purple-700",
       bugfix: "bg-red-50 text-red-700",
@@ -115,7 +115,7 @@ export default function SubmissionList() {
       design: "bg-pink-50 text-pink-700",
       other: "bg-gray-50 text-gray-700",
     };
-
+    
     return (
       <Badge className={types[type] || types.other}>
         {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -149,7 +149,6 @@ export default function SubmissionList() {
               Sort
             </Button>
           </div>
-
           <TabsContent value={activeTab} className="mt-4">
             <div className="space-y-4">
               {filteredSubmissions.length > 0 ? (
