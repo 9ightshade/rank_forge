@@ -16,6 +16,7 @@ import {
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import Image from "next/image";
+import pfp from "@/public/images/avatar.png";
 // Stats data
 const stats = [
   { value: "230+", label: "Active Contributors" },
@@ -69,21 +70,21 @@ const testimonials = [
       "RankForge has completely transformed how I track my contributions. The scoring system is transparent and the feedback helps me grow.",
     author: "Alex Chen",
     role: "Senior Developer",
-    avatar: "/api/placeholder/40/40",
+    avatar: pfp,
   },
   {
     content:
       "The ranking system motivates me to contribute more and improve the quality of my work. I've learned so much since joining.",
     author: "Priya Sharma",
     role: "Full Stack Developer",
-    avatar: "/api/placeholder/40/40",
+    avatar:pfp,
   },
   {
     content:
       "As a project maintainer, RankForge helps me recognize and reward the best contributors with minimal effort.",
     author: "Marco Rossi",
     role: "Project Admin",
-    avatar: "/api/placeholder/40/40",
+    avatar: pfp,
   },
 ];
 export default function HomePage() {
