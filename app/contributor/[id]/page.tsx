@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -117,7 +116,7 @@ export default function ContributorProfilePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 pb-12">
-        <div className="container py-8 md:py-12">
+        <div className="container mx-auto max-w-6xl px-4 py-8 md:py-12">
           <div className="grid gap-8 md:grid-cols-3">
             {/* Sidebar */}
             <div className="space-y-6">
