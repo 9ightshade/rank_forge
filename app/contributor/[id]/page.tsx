@@ -1,12 +1,13 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Github, Twitter, Globe, MapPin, Calendar, Award,  } from "lucide-react"
-import ProfileBadge from "@/components/contributor/profileBadge"
-import ScoreCard from "@/components/contributor/scoreCard"
+"use client";
 
-// Check, Clock, X
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Github, Twitter, Globe, MapPin, Calendar, Award, Check, Clock, X } from "lucide-react";
+import ProfileBadge from "@/components/contributor/profileBadge";
+import ScoreCard from "@/components/contributor/scoreCard";
+import { JSX } from "react";
 
 // Sample contributor data
 const contributor = {
@@ -64,60 +65,58 @@ const contributor = {
       score: null,
     },
   ],
-}
+};
 
 export default function ContributorProfilePage() {
-  // interface StatusBadgeProps {
-  //   status: "approved" | "pending" | "rejected";
-  // }
+  interface StatusBadgeProps {
+    status: "approved" | "pending" | "rejected";
+  }
 
-  // const getStatusBadge = (status: StatusBadgeProps["status"]): JSX.Element | null => {
-  //   switch (status) {
-  //     case "approved":
-  //       return (
-  //         <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-50">
-  //           <Check className="mr-1 h-3 w-3" /> Approved
-  //         </Badge>
-  //       )
-  //     case "pending":
-  //       return (
-  //         <Badge variant="outline" className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50">
-  //           <Clock className="mr-1 h-3 w-3" /> Pending
-  //         </Badge>
-  //       )
-  //     case "rejected":
-  //       return (
-  //         <Badge variant="outline" className="bg-red-50 text-red-700 hover:bg-red-50">
-  //           <X className="mr-1 h-3 w-3" /> Rejected
-  //         </Badge>
-  //       )
-  //     default:
-  //       return null
-  //   }
-  // }
+  const getStatusBadge = (status: StatusBadgeProps["status"]): JSX.Element | null => {
+    switch (status) {
+      case "approved":
+        return (
+          <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-50">
+            <Check className="mr-1 h-3 w-3" /> Approved
+          </Badge>
+        );
+      case "pending":
+        return (
+          <Badge variant="outline" className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50">
+            <Clock className="mr-1 h-3 w-3" /> Pending
+          </Badge>
+        );
+      case "rejected":
+        return (
+          <Badge variant="outline" className="bg-red-50 text-red-700 hover:bg-red-50">
+            <X className="mr-1 h-3 w-3" /> Rejected
+          </Badge>
+        );
+      default:
+        return null;
+    }
+  };
 
-  // const types = {
-  //   feature: "bg-purple-50 text-purple-700",
-  //   bugfix: "bg-red-50 text-red-700",
-  //   documentation: "bg-blue-50 text-blue-700",
-  //   test: "bg-green-50 text-green-700",
-  //   design: "bg-pink-50 text-pink-700",
-  //   other: "bg-gray-50 text-gray-700",
-  // }
+  const types = {
+    feature: "bg-purple-50 text-purple-700",
+    bugfix: "bg-red-50 text-red-700",
+    documentation: "bg-blue-50 text-blue-700",
+    test: "bg-green-50 text-green-700",
+    design: "bg-pink-50 text-pink-700",
+    other: "bg-gray-50 text-gray-700",
+  };
 
-  // const getTypeBadge = (type: keyof typeof types) => {
-
-  //   return (
-  //     <Badge variant="outline" className={types[type] || types.other}>
-  //       {type.charAt(0).toUpperCase() + type.slice(1)}
-  //     </Badge>
-  //   )
-  // }
+  const getTypeBadge = (type: keyof typeof types) => {
+    return (
+      <Badge variant="outline" className={types[type] || types.other}>
+        {type.charAt(0).toUpperCase() + type.slice(1)}
+      </Badge>
+    );
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
-      
-      <main className="flex-1">
+      <main className="flex-1 pb-12">
         <div className="container py-8 md:py-12">
           <div className="grid gap-8 md:grid-cols-3">
             {/* Sidebar */}
@@ -135,7 +134,6 @@ export default function ContributorProfilePage() {
                       <ProfileBadge type={contributor.rank.toLowerCase() as "bronze" | "silver" | "gold" | "platinum"} label={contributor.rank} />
                     </div>
                     <p className="mt-4 text-sm">{contributor.bio}</p>
-
                     <div className="mt-4 flex w-full flex-col gap-2 text-sm">
                       {contributor.location && (
                         <div className="flex items-center gap-2">
@@ -161,7 +159,6 @@ export default function ContributorProfilePage() {
                         <span>Joined {contributor.joinedDate}</span>
                       </div>
                     </div>
-
                     <div className="mt-4 flex gap-2">
                       {contributor.github && (
                         <Button variant="outline" size="icon" asChild>
@@ -169,6 +166,7 @@ export default function ContributorProfilePage() {
                             href={`https://github.com/${contributor.github}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="GitHub profile"
                           >
                             <Github className="h-4 w-4" />
                             <span className="sr-only">GitHub</span>
@@ -181,6 +179,7 @@ export default function ContributorProfilePage() {
                             href={`https://twitter.com/${contributor.twitter}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label="Twitter profile"
                           >
                             <Twitter className="h-4 w-4" />
                             <span className="sr-only">Twitter</span>
@@ -191,7 +190,6 @@ export default function ContributorProfilePage() {
                   </div>
                 </CardContent>
               </Card>
-
               {/* Score Card */}
               <ScoreCard
                 score={contributor.score}
@@ -199,7 +197,6 @@ export default function ContributorProfilePage() {
                 nextRank={contributor.nextRank}
                 progress={contributor.progress}
               />
-
               {/* Skills Card */}
               <Card>
                 <CardHeader className="pb-2">
@@ -216,11 +213,10 @@ export default function ContributorProfilePage() {
                 </CardContent>
               </Card>
             </div>
-
             {/* Main Content */}
             <div className="md:col-span-2 space-y-6">
               {/* Stats Cards */}
-              <div className="grid gap-4 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <Card>
                   <CardContent className="p-4 text-center">
                     <p className="text-sm text-muted-foreground">Contributions</p>
@@ -246,7 +242,6 @@ export default function ContributorProfilePage() {
                   </CardContent>
                 </Card>
               </div>
-
               {/* Contributions */}
               <Card>
                 <CardHeader>
@@ -268,14 +263,14 @@ export default function ContributorProfilePage() {
                         >
                           <div className="space-y-1">
                             <h3 className="font-medium">{submission.title}</h3>
-                            <div className="flex flex-wrap gap-2">
-                              {/* {getTypeBadge(submission.type)}
-                              {getStatusBadge(submission.status)} */}
+                            <div className="flex flex-wrap gap-2 items-center">
+                              {getTypeBadge(submission.type as keyof typeof types)}
+                              {getStatusBadge(submission.status as StatusBadgeProps["status"])}
                               <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                             </div>
                           </div>
                           {submission.score && (
-                            <div className="mt-2 sm:mt-0">
+                            <div className="mt-2 shrink-0 sm:mt-0">
                               <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
                                 Score: {submission.score}
                               </span>
@@ -284,7 +279,7 @@ export default function ContributorProfilePage() {
                         </div>
                       ))}
                     </TabsContent>
-                    <TabsContent value="approved">
+                    <TabsContent value="approved" className="space-y-4">
                       {contributor.recentSubmissions
                         .filter((s) => s.status === "approved")
                         .map((submission) => (
@@ -294,14 +289,14 @@ export default function ContributorProfilePage() {
                           >
                             <div className="space-y-1">
                               <h3 className="font-medium">{submission.title}</h3>
-                              <div className="flex flex-wrap gap-2">
-                                {/* {getTypeBadge(submission.type)}
-                                {getStatusBadge(submission.status)} */}
+                              <div className="flex flex-wrap gap-2 items-center">
+                                {getTypeBadge(submission.type as keyof typeof types)}
+                                {getStatusBadge(submission.status as StatusBadgeProps["status"])}
                                 <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                               </div>
                             </div>
                             {submission.score && (
-                              <div className="mt-2 sm:mt-0">
+                              <div className="mt-2 shrink-0 sm:mt-0">
                                 <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
                                   Score: {submission.score}
                                 </span>
@@ -310,7 +305,7 @@ export default function ContributorProfilePage() {
                           </div>
                         ))}
                     </TabsContent>
-                    <TabsContent value="pending">
+                    <TabsContent value="pending" className="space-y-4">
                       {contributor.recentSubmissions
                         .filter((s) => s.status === "pending")
                         .map((submission) => (
@@ -320,9 +315,9 @@ export default function ContributorProfilePage() {
                           >
                             <div className="space-y-1">
                               <h3 className="font-medium">{submission.title}</h3>
-                              <div className="flex flex-wrap gap-2">
-                                {/* {getTypeBadge(submission.type)}
-                                {getStatusBadge(submission.status)} */}
+                              <div className="flex flex-wrap gap-2 items-center">
+                                {getTypeBadge(submission.type as keyof typeof types)}
+                                {getStatusBadge(submission.status as StatusBadgeProps["status"])}
                                 <span className="text-xs text-muted-foreground">Submitted on {submission.date}</span>
                               </div>
                             </div>
@@ -332,7 +327,6 @@ export default function ContributorProfilePage() {
                   </Tabs>
                 </CardContent>
               </Card>
-
               {/* Achievements */}
               <Card>
                 <CardHeader>
@@ -340,7 +334,7 @@ export default function ContributorProfilePage() {
                   <CardDescription>Badges and achievements earned through contributions</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                     <div className="flex flex-col items-center gap-2 rounded-lg border p-4 text-center">
                       <Award className="h-8 w-8 text-primary" />
                       <span className="font-medium">First Contribution</span>
@@ -369,5 +363,5 @@ export default function ContributorProfilePage() {
         </div>
       </main>
     </div>
-  )
+  );
 }
