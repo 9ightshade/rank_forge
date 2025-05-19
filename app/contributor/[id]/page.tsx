@@ -3,10 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Github, Twitter, Globe, MapPin, Calendar, Award,  } from "lucide-react"
-import Navbar from "@/components/layout/navbar"
 import ProfileBadge from "@/components/contributor/profileBadge"
 import ScoreCard from "@/components/contributor/scoreCard"
-import Footer from "@/components/layout/footer"
+
 // Check, Clock, X
 
 // Sample contributor data
@@ -117,7 +116,7 @@ export default function ContributorProfilePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar/>
+      
       <main className="flex-1">
         <div className="container py-8 md:py-12">
           <div className="grid gap-8 md:grid-cols-3">
@@ -369,7 +368,6 @@ export default function ContributorProfilePage() {
           </div>
         </div>
       </main>
-      <Footer/>
     </div>
   )
 }
